@@ -1,3 +1,6 @@
+""" Test application
+"""
+
 import os
 import sys
 import time
@@ -20,7 +23,6 @@ TRANSLATIONS = {
     "Well Met": "Throm-Ka"
 }
 
-
 def timing_and_logger(fn) -> Callable[..., Any]:
     """ Decorator function to log HTTP requests and timing info
     """
@@ -34,7 +36,9 @@ def timing_and_logger(fn) -> Callable[..., Any]:
         duration: time.time = time.monotonic() - start
 
         print(
-            f"[{request_time}] {request.remote_addr} - {request.method} {request.fullpath}?{request.query_string} {response.status_code} - {duration * 1000:0.2f}ms")
+            f"[{request_time}] {request.remote_addr} - \
+              {request.method} {request.fullpath}?{request.query_string} \
+              {response.status_code} - {duration * 1000:0.2f}ms")
         return actual_response
 
     return _timing_and_logger
@@ -58,7 +62,8 @@ def translate() -> Dict[str, Union[str, List[str]]]:
     """ Translate a phrase from Orcish to English
     """
     phrase: str = request.query.phrase or None
-    response_body: Dict[str, Union[str, List[str]]] = {"phrase": phrase, "translation": None, "errors": []}
+    response_body: Dict[str, Union[str, List[str]]] = \
+      {"phrase": phrase, "translation": None, "errors": []}
 
     if app.config.get('translateapp.redis'):
         record_request_stats()
@@ -90,7 +95,8 @@ if __name__ == '__main__':
     redis_addr: str = os.getenv("REDIS_ADDR")
     if redis_addr:
         try:
-            app.config['translateapp.redis']: redis.Redis = redis.Redis(host=redis_addr, port=6379, db=0)
+            app.config['translateapp.redis']: redis.Redis = \
+              redis.Redis(host=redis_addr, port=6379, db=0)
             # Run a command to make sure redis connection info is correct
             app.config['translateapp.redis'].info()
         except redis.RedisError as redis_err:
