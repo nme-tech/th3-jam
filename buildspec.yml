@@ -1,0 +1,29 @@
+# TH3 Buildspec for AWS CodeBuild segment of CodePipeline
+#
+# @author Nick Stires <nick@nmetech.com>
+# @link https://console.aws.amazon.com/codesuite/codepipeline/pipelines/th3/view?region=us-east-1
+#
+# Build environment is AmazonLinux 2 container
+# Redis hosted via AWS ElasticCache
+#
+# ------------------------------------------------------------------------------
+
+version: 0.2
+
+run-as: root
+
+env:
+  shell: bash
+  variables:
+    REDIS_ADDR: "th3-test.wau2ig.0001.use1.cache.amazonaws.com"
+  git-credential-helper: no
+
+phases:
+  install:
+    commands:
+      - yum install -y python3
+      - pip3 install -r requirements.txt # Application requirements
+      - pip3 install pylint
+  build:
+    commands:
+      - pylint --rcfile=.pylintrc --fail-under=8 application.py
