@@ -1,6 +1,11 @@
 """ Test application
 """
 
+from gunicorn.app.base import Application, Config
+import gunicorn
+from gunicorn import glogging
+from gunicorn.workers import sync
+
 import os
 import sys
 import time
