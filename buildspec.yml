@@ -24,15 +24,15 @@ phases:
       python: 3.7
     commands:
       - pip3 install -r requirements.txt # App reqs.
-      - pip3 install pylint
+      - pip3 install pylint pyinstaller
       - mkdir artifacts_out/
-      - export VERSION=`grep "^__version__" src/th3-server.py | awk -F\" '{print $2}'`
+      - export VERSION=`grep "^__version__" src/th3_server.py | awk -F\" '{print $2}'`
   pre_build:
     commands:
-      - pylint --rcfile=.pylintrc --fail-under=8 src/th3-server.py > artifacts_out/th3-server-${VERSION}.out
+      - pylint --rcfile=.pylintrc --fail-under=8 src/th3_server.py > artifacts_out/th3_server_${VERSION}.out
   build:
     commands:
-      - pyinstaller --onefile --distpath artifacts_out/ -n th3-${VERSION}.py src/th3-server.py
+      - pyinstaller --onefile --distpath artifacts_out/ src/th3_server.py
 artifacts:
   files:
     - 'artifacts_out/*'

@@ -1,17 +1,17 @@
 """ Test application
 """
 
-from gunicorn.app.base import Application, Config
-import gunicorn
-from gunicorn import glogging
-from gunicorn.workers import sync
-
 import os
 import sys
 import time
 from datetime import datetime
 from functools import wraps
 from typing import Any, Dict, Callable, Union, List
+
+import gunicorn
+from gunicorn import glogging
+from gunicorn.workers import sync
+from gunicorn.app.base import Application, Config
 
 import redis
 from bottle import request, response, Bottle
