@@ -1,0 +1,30 @@
+{
+  "family": "th3-server",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+      {
+        "name": "th3-srv",
+        "image": "amazonlinux:2",
+        "portMappings": [
+          {
+            "containerPort": 8080,
+            "hostPort": 8080,
+            "protocol": "tcp"
+          }
+        ],
+        "essential": true,
+        "entryPoint": [
+          "sh",
+          "-c"
+        ],
+        "command": [
+          "th3_server"
+        ]
+      }
+    ],
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}

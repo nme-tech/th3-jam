@@ -1,0 +1,48 @@
+{
+  "applicationName": "REPLACE_APP_NAME",
+  "autoRollbackConfiguration": {
+    "enabled": true,
+    "events": [ "DEPLOYMENT_FAILURE" ]
+  },
+  "blueGreenDeploymentConfiguration": {
+    "deploymentReadyOption": {
+    "actionOnTimeout": "CONTINUE_DEPLOYMENT",
+    "waitTimeInMinutes": 0
+    },
+    "terminateBlueInstancesOnDeploymentSuccess": {
+    "action": "TERMINATE",
+    "terminationWaitTimeInMinutes": 5
+    }
+  },
+  "deploymentGroupName": "REPLACE_APP_NAME-dg",
+  "deploymentStyle": {
+    "deploymentOption": "WITH_TRAFFIC_CONTROL",
+    "deploymentType": "BLUE_GREEN"
+  },
+  "loadBalancerInfo": {
+    "targetGroupPairInfoList": [
+      {
+        "targetGroups": [
+        {
+          "name": "REPLACE_ALB_NAME-blue-target-group"
+        },
+        {
+          "name": "REPLACE_ALB_NAME-green-target-group"
+        }
+        ],
+        "prodTrafficRoute": {
+          "listenerArns": [
+            "REPLACE_ALB_LISTENER_ARN"
+          ]
+        }
+      }
+    ]
+  },
+  "serviceRoleArn": "REPLACE_CD_DEP_ROLE",
+  "ecsServices": [
+    {
+      "serviceName": "th3-server",
+      "clusterName": "REPLACE_ECS_NAME"
+    }
+  ]
+}
